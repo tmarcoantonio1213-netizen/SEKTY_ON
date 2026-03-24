@@ -1,0 +1,18 @@
+﻿<Application x:Class="SEKTY_ON.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SEKTY_ON"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="FontKikuta" TargetType="Label">
+            <Setter Property="FontFamily"
+                    Value="/Desing/Fonts/#Kikuta Thin"/>
+        </Style>
+
+        <Style x:Key="FontZxGemut" TargetType="Label">
+            <Setter Property="FontFamily"
+                    Value="/Desing/Fonts/#Zx Gamut Medium"/>
+        </Style>
+
+    </Application.Resources>
+</Application>
