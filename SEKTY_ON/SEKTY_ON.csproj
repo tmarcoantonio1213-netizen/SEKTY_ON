@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,9 +58,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UsuariosWindow.xaml.cs">
-      <DependentUpon>UsuariosWindow.xaml</DependentUpon>
+    <Compile Include="AgregarLabPage.xaml.cs">
+      <DependentUpon>AgregarLabPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LaboratoriosPage.xaml.cs">
+      <DependentUpon>LaboratoriosPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ResponsableClass.cs" />
+    <Compile Include="UsuariosPage.xaml.cs">
+      <DependentUpon>UsuariosPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AgregarLabPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LaboratoriosPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -70,7 +95,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UsuariosWindow.xaml">
+    <Page Include="UsuariosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -97,7 +122,9 @@
     <Resource Include="Desing\Fonts\kikuta-variable-VF.ttf" />
     <Resource Include="Desing\Fonts\ZxGamut-Light.otf" />
     <Resource Include="Desing\Fonts\ZxGamut-Bold.otf" />
+    <Resource Include="Desing\Fonts\BBBPoppinsTN-TextBlack.ttf" />
     <None Include="Desing\Fonts\ZxGamut-Medium.ttf" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,7 +136,6 @@
   <ItemGroup>
     <Resource Include="Desing\Iconos\agregarContacto.png" />
     <Resource Include="Desing\Iconos\anteriorPagina.png" />
-    <Resource Include="Desing\Iconos\enviarMensaje.png" />
     <Resource Include="Desing\Iconos\menuOpciones.png" />
     <Resource Include="Desing\Iconos\recargarPagina.png" />
     <Resource Include="Desing\Iconos\siguientePagina.png" />
@@ -130,19 +156,38 @@
     <Resource Include="Desing\Iconos\laboratorioPredeterminado.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Desing\Iconos\estadoPuerta\puertaCerrada.png" />
+    <Resource Include="Desing\Iconos\eliminar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Images\pizarra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Iconos\avatarUsuario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Iconos\llaveContraseña.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Iconos\verContraseña.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Desing\Iconos\estadoPuerta\puertaAbierta.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Desing\Iconos\estadoMantenimiento\fueraMantenimiento.png" />
+    <Resource Include="Desing\Iconos\estadoPuerta\puertaCerrada.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Desing\Iconos\estadoMantenimiento\bajoMantenimiento.png" />
+    <Resource Include="Desing\Iconos\estadoLaboratorio\limpieza.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Desing\Iconos\eliminar.png" />
+    <Resource Include="Desing\Iconos\estadoLaboratorio\mantenimiento.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Iconos\estadoLaboratorio\clase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Iconos\estadoLaboratorio\libre.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

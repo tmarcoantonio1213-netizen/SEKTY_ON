@@ -1,0 +1,191 @@
+﻿<Window x:Class="SEKTY_ON.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SEKTY_ON"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="450" Width="800"
+        WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#D9D9D9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="800"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Column="0"
+                   Height="580" Width="580"
+                   Source="/Desing/Images/pizarra.png"/>
+
+            <Border Grid.Column="1"
+                    Background="White"
+                    Height="630" Width="650"
+                    Margin="20,0,0,0"
+                    CornerRadius="20" BorderThickness="0"
+                    ClipToBounds="True">
+
+                <StackPanel>
+
+                    <TextBlock
+                        Width="400"
+                        TextWrapping="Wrap"
+                        Text="Biembenido a SEKTY ON"
+                        FontSize="50" Foreground="#660636" FontFamily="/Desing/Fonts/#BBB Poppins TN Text Black"
+                        HorizontalAlignment="Left"
+                        Margin="55,30,0,0"/>
+
+                    <Border Background="#D9D9D9" 
+                            Height="60" 
+                            Margin="45,55,45,0" 
+                            CornerRadius="10" BorderThickness="0"
+                            ClipToBounds="True">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image
+                                Height="40" Width="40"
+                                Source="/Desing/Iconos/avatarUsuario.png"
+                                Margin="10,0,5,0"/>
+                            <TextBox x:Name="txtUsername"
+                                Height="49" Width="498"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                FontSize="30"
+                                VerticalContentAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Background="#D9D9D9" 
+                            Height="60" 
+                            Margin="45,55,45,0" 
+                            CornerRadius="10" BorderThickness="0"
+                            ClipToBounds="True">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image
+                                Height="40" Width="40"
+                                Source="/Desing/Iconos/llaveContraseña.png"
+                                Margin="10,0,5,0"/>
+
+                            <PasswordBox x:Name="txtPassword"
+                                         Height="49" Width="455"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         FontSize="30"
+                                         VerticalContentAlignment="Center"/>
+                            <TextBox x:Name="txtPasswordVisible" 
+                                     Height="49" Width="455" 
+                                     FontSize="30" 
+                                     Visibility="Collapsed" 
+                                     Background="Transparent" 
+                                     BorderThickness="0" 
+                                     VerticalContentAlignment="Center"/>
+
+                            <Button x:Name="btnVerPassword"
+                                    PreviewMouseDown="btnVerContraseña_PreviewMouseDown"
+                                    PreviewMouseUp="btnVerContraseña_PreviewMouseUp"
+                                    Height="34" Width="34"
+                                    Background="Transparent"
+                                    BorderThickness="0">
+                                <Image
+                                    Height="30" Width="30"
+                                    Source="/Desing/Iconos/verContraseña.png"/>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="borderRedondo"
+                                                Background="{TemplateBinding Background}"
+                                                BorderThickness="0"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="borderRedondo" Property="Opacity" Value="0.8"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <DockPanel>
+                        <Button x:Name="btnOlvidoContraseña"
+                                Width="200"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="¿Olvidaste tu Contraseña?"
+                                FontSize="17" Foreground="#660636"
+                                Margin="0,50,0,0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="borderRedondo"
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="0"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="borderRedondo" Property="Opacity" Value="0.8"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <Button x:Name="btnLogin"
+                                Click="btnLogin_Click"
+                                Height="70"
+                                Background="#660636"
+                                BorderThickness="0"
+                                Content="Login"
+                                FontSize="35" Foreground="White" FontFamily="/Desing/Fonts/#kikuta Thin"
+                                VerticalAlignment="Center"
+                                Margin="45,50,45,0">
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="borderRedondo"
+                                            Background="{TemplateBinding Background}"
+                                            CornerRadius="10" 
+                                            BorderThickness="0"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="borderRedondo" Property="Opacity" Value="0.8"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DockPanel>
+
+                </StackPanel>
+
+            </Border>
+            
+        </Grid>
+
+        <StackPanel Grid.Row="1"
+                    Background="#660636"/>
+    </Grid>
+</Window>

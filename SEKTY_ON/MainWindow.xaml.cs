@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using SEKTY_ON.Models;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Http;
 
 namespace SEKTY_ON
 {
@@ -24,24 +26,61 @@ namespace SEKTY_ON
         {
             InitializeComponent();
 
-            var laboratorios = new List<object>
-            {
-                new { Nombre = "Laboratorio de Redes", Ubicacion = "Edificio A" },
-                new { Nombre = "Laboratorio de Cómputo 1", Ubicacion = "Edificio B" },
-                new { Nombre = "Sala de Innovación Digital", Ubicacion = "Edificio C" },
-                new { Nombre = "Laboratorio de Redes", Ubicacion = "Edificio A" },
-                new { Nombre = "Laboratorio de Cómputo 1", Ubicacion = "Edificio B" },
-                new { Nombre = "Sala de Innovación Digital", Ubicacion = "Edificio C" },
-                new { Nombre = "Laboratorio de Redes", Ubicacion = "Edificio A" },
-                new { Nombre = "Laboratorio de Cómputo 1", Ubicacion = "Edificio B" },
-                new { Nombre = "Sala de Innovación Digital", Ubicacion = "Edificio C" },
-                new { Nombre = "Laboratorio de Redes", Ubicacion = "Edificio A" },
-                new { Nombre = "Laboratorio de Cómputo 1", Ubicacion = "Edificio B" },
-                new { Nombre = "Sala de Innovación Digital", Ubicacion = "Edificio C" },
-                new { Nombre = "Laboratorio de Redes", Ubicacion = "Edificio A" }
-            };
+            _ = ValidarYRefrescarPerfil();
+        }
 
-            lstBxLaboratorios.ItemsSource = laboratorios;
+        private async Task ValidarYRefrescarPerfil()
+        {
+            bool perfilActivo = false;
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string url = "https://localhost:7060/api/Responsables";
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        List<Responsable> responsables = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Responsable>>(json);
+
+
+                        if (responsables != null)
+                        {
+                            var usuarioActivo = responsables.FirstOrDefault(r => r.Activado == true);
+                            
+                            if (usuarioActivo != null)
+                            {
+                                this.DataContext = usuarioActivo;
+                            }
+                            else
+                            {
+                                irAlLogin();
+                            }
+                        }
+                        else
+                        {
+                            irAlLogin();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al validar el estado del perfil: {ex.Message}");
+                }
+
+                
+                MainFrame.Navigate(new LaboratoriosPage());
+            }
+        }
+
+        private void irAlLogin()
+        {
+            LoginWindow ventanaLogin = new LoginWindow();
+            ventanaLogin.Show();
+            this.Close();
         }
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)
@@ -58,16 +97,17 @@ namespace SEKTY_ON
 
         private void btnLaboratorios_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow ventanaUsuarios = new MainWindow();
-            ventanaUsuarios.Show();
-            this.Close();
+            MainFrame.Navigate(new LaboratoriosPage());
         }
 
         private void btnUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            UsuariosWindow ventanaUsuarios = new UsuariosWindow();
-            ventanaUsuarios.Show();
-            this.Close();
+            MainFrame.Navigate(new UsuariosPage());
+        }
+
+        private void btnPerfil_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
