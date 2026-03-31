@@ -76,7 +76,7 @@
                     </Border>
 
                     <TextBlock
-                        Text="Edificio donde se ubica:"
+                        Text="No. del Edificio donde se ubica:"
                         FontSize="20"
                         HorizontalAlignment="Left"
                         Margin="55,0,0,0"/>

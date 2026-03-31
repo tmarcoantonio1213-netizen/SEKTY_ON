@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Net.Http;
-using System.Text;
-using System.Linq.Expressions;
 using SEKTY_ON.Models;
 using Newtonsoft.Json;
 
@@ -62,12 +51,14 @@ namespace SEKTY_ON
             {
                 if (username.Length > 50)
                 {
-                    MessageBox.Show("El nombre de usuario debe tener con menos de 50 caracteres.");
+                    MessageBox.Show("Nombre de usuario: No ingreses mas de 50 caracteres.");
+                    return;
                 }
 
                 if (password.Length != 8)
                 {
-                    MessageBox.Show("La contraseña debe poseer 8 caracteres.");
+                    MessageBox.Show("Contraseña: Debe poseer solo 8 caracteres.");
+                    return;
                 }
             }
 
@@ -94,7 +85,6 @@ namespace SEKTY_ON
                         MessageBox.Show("Inicio de sesión exitoso.");
 
                         MainWindow laboratoriosVentana = new MainWindow();
-                        laboratoriosVentana.DataContext = usuarioLogueado;
                         laboratoriosVentana.Show();
                         this.Close();
                     }

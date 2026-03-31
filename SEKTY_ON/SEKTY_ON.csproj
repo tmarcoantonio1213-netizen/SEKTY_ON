@@ -61,12 +61,16 @@
     <Compile Include="AgregarLabPage.xaml.cs">
       <DependentUpon>AgregarLabPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desing\Clases\AbiertoIconConverter.cs" />
+    <Compile Include="Desing\Clases\EstadosIconConverter.cs" />
     <Compile Include="LaboratoriosPage.xaml.cs">
       <DependentUpon>LaboratoriosPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\EstadoClass.cs" />
+    <Compile Include="Models\LaboratorioClass.cs" />
     <Compile Include="Models\ResponsableClass.cs" />
     <Compile Include="UsuariosPage.xaml.cs">
       <DependentUpon>UsuariosPage.xaml</DependentUpon>

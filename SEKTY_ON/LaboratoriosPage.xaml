@@ -4,9 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SEKTY_ON"
+      xmlns:modelsClases="clr-namespace:SEKTY_ON.Desing.Clases"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LaboratoriosPage">
+
+    <Page.Resources>
+        <modelsClases:AbiertoIconConverter x:Key="AbiertoIcon"/>
+        <modelsClases:EstadosIconConverter x:Key="EstadoIcon"/>
+    </Page.Resources>
 
     <Grid Background="Gray">
 
@@ -44,7 +50,6 @@
                     </Setter>
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Cursor" Value="Hand"/>
                 </Style>
             </ListBox.ItemContainerStyle>
 
@@ -59,7 +64,7 @@
                     <Border
                         Height="Auto" Width="195"
                         Background="White"
-                        Margin="16,15,0,0"
+                        Margin="16,15,10,0"
                         CornerRadius="20">
 
                         <Grid>
@@ -103,7 +108,7 @@
                                            FontSize="15" FontWeight="Bold"
                                            HorizontalAlignment="Center"
                                            Margin="0,10,0,10"/>
-                                <TextBlock Text="{Binding Ubicacion}"
+                                <TextBlock Text="{Binding Edificio, StringFormat='Edificio {0}'}"
                                            FontSize="14" FontWeight="Bold" Foreground="Gray"
                                            HorizontalAlignment="Center"
                                            Margin="0,0,0,10"/>
@@ -111,23 +116,65 @@
 
                             <StackPanel Grid.Row="1" Orientation="Horizontal"
                                         Background="#e5e5e5">
-                                <Image x:Name="imgPuerta"
-                                       Height="20" Width="20"
-                                       Source="/Desing/Iconos/estadoPuerta/puertaCerrada.png"
-                                       Margin="20,10,45,10"/>
+                                
+                                <Button x:Name="btnAbrirPuerta"
+                                        Click="btnAbrirPuerta_Click"
+                                        Height="25" Width="25"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Margin="20,10,45,10">
+                                    <Image x:Name="imgPuerta"
+                                           Height="20" Width="20"
+                                           Source="{Binding Abierto, Converter={StaticResource AbiertoIcon}}"/>
 
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="borderRedondo"
+                                                    Background="{TemplateBinding Background}"
+                                                    CornerRadius="10" 
+                                                    BorderThickness="0"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                
                                 <Image x:Name="imgMantenimiento"
                                        Height="25" Width="25"
-                                       Source="/Desing/Iconos/estadoLaboratorio/libre.png"
+                                       Source="{Binding Estado.Nombre, Converter={StaticResource EstadoIcon}}"
                                        Margin="0,0,40,0"/>
 
                                 <Button x:Name="btnEliminarLaboratorio"
+                                        Click="btnEliminarLaboratorio_Click"
                                         Height="25" Width="25"
                                         Background="Transparent"
                                         BorderBrush="Transparent">
                                     <Image
                                         Height="20" Width="20"
                                         Source="/Desing/Iconos/eliminar.png"/>
+
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="borderRedondo"
+                                                    Background="{TemplateBinding Background}"
+                                                    CornerRadius="10" 
+                                                    BorderThickness="0"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
                                 </Button>
 
                             </StackPanel>
