@@ -4,9 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SEKTY_ON"
+      xmlns:modelsClases="clr-namespace:SEKTY_ON.Desing.Clases"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UsuariosPage">
+
+    <Page.Resources>
+        <modelsClases:AbilitarCuentaConverter x:Key="AbilitarCuenta"/>
+    </Page.Resources>
 
     <Grid Background="Gray">
 
@@ -32,6 +37,99 @@
                  BorderThickness="0"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Background="Transparent"
+                        Height="70"
+                        Margin="10,8,10,8">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0"
+                                   Height="90" Width="90"
+                                   Source="/Desing/Iconos/usuarioPerfil.png"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0"
+                                           Text="{Binding Nombre}"
+                                           FontSize="27" FontFamily="/Desing/Fonts/#Zx Gamut Bold" Foreground="#660636"
+                                           Margin="15,7,0,0"/>
+
+                                <TextBlock Grid.Row="1"
+                                           Text="{Binding Puesto.Tipo, StringFormat='Rol: {0}'}"
+                                           FontSize="18" FontFamily="/Desing/Fonts/#Zx Gamut"
+                                           Margin="15,0,0,0"/>
+                            </Grid>
+
+                            <Button Grid.Column="2" x:Name="btnAbilitarCuenta"
+                                    Click="btnAbilitarCuenta_Click"
+                                    BorderThickness="0"
+                                    Height="53"
+                                    Margin="0,0,15,0">
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+
+                                        <Border x:Name="bordeRedondo"
+                                                Background="#660636"
+                                                Height="50" Width="100"
+                                                CornerRadius="10"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        </Border>
+                                        
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bordeRedondo" Property="Background" Value="#590a2a"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Grid.Column="0" x:Name="AbilitarCuneta"
+                                               Text="{Binding Abilitado, Converter={StaticResource AbilitarCuenta}}"
+                                               FontSize="15" FontFamily="/Desing/Fonts/#Zx Gamut Medium" Foreground="White"
+                                               HorizontalAlignment="Center"/>
+                                </Grid>
+                                
+                            </Button>
+                            
+                        </Grid>
+
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
     </Grid>

@@ -64,7 +64,7 @@
                     <Border
                         Height="Auto" Width="195"
                         Background="White"
-                        Margin="16,15,10,0"
+                        Margin="19,15,0,10"
                         CornerRadius="20">
 
                         <Grid>
