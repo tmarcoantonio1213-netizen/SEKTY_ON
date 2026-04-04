@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Net.Http;
 using SEKTY_ON.Models;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace SEKTY_ON
 {
@@ -40,9 +41,10 @@ namespace SEKTY_ON
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
+            string correo = txtCorreo.Text;
             string password = txtPassword.Password;
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(correo))
             {
                 MessageBox.Show("Por favor, complete todos los campos.");
                 return;
@@ -55,6 +57,28 @@ namespace SEKTY_ON
                     return;
                 }
 
+                if (correo.Length > 100)
+                {
+                    MessageBox.Show("Correo electronico: No ingreses mas de 100 caracteres.");
+                    return;
+                }
+                else
+                {
+                    string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+                    if (!Regex.IsMatch(correo, patronCorreo))
+                    {
+                        MessageBox.Show("Por favor, ingrese un correo electrónico válido (ejemplo@dominio.com).");
+                        return;
+                    }
+
+                    if (!correo.EndsWith("@gmail.com") && !correo.EndsWith("@uptcamac.edu.mx"))
+                    {
+                        MessageBox.Show("Solo se permiten correos de dominios conocidos.");
+                        return;
+                    }
+                }
+                
+
                 if (password.Length != 8)
                 {
                     MessageBox.Show("Contraseña: Debe poseer solo 8 caracteres.");
@@ -63,7 +87,7 @@ namespace SEKTY_ON
             }
 
             // guardar datos en la base de datos
-            var loginData = new { Nombre = username, Contraseña = password, Activado = true };
+            var loginData = new { Nombre = username, Contraseña = password, Activado = true, Correo = correo };
 
             try
             {

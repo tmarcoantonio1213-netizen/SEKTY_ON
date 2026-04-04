@@ -66,7 +66,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Image Grid.Column="0"
-                                   Height="90" Width="90"
+                                   Height="80" Width="80"
                                    Source="/Desing/Iconos/usuarioPerfil.png"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
 

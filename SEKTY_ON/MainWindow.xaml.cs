@@ -97,7 +97,9 @@ namespace SEKTY_ON
 
         private void btnPerfil_Click(object sender, RoutedEventArgs e)
         {
-            
+            PerfilWindow ventanaPerfil = new PerfilWindow();
+            ventanaPerfil.Show();
+            this.Close();
         }
     }
 }

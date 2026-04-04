@@ -15,5 +15,7 @@ namespace SEKTY_ON.Models
         public byte[] Contraseña { get; set; }
 
         public bool Activado { get; set; }
+
+        public string Correo { get; set; }
     }
 }
