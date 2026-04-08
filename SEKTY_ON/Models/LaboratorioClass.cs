@@ -18,6 +18,8 @@ namespace SEKTY_ON.Models
 
         public bool Abierto { get; set; }
 
+        public int Numero { get; set; }
+
         public virtual Estado Estado { get; set; }
     }
 }

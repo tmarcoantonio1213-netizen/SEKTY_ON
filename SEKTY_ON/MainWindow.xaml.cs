@@ -37,10 +37,10 @@ namespace SEKTY_ON
                         List<Responsable> responsables = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Responsable>>(json);
 
 
-                        if (responsables != null)
+                        if (responsables != null && responsables.Count > 0)
                         {
                             var usuarioActivo = responsables.FirstOrDefault(r => r.Activado == true);
-                            
+
                             if (usuarioActivo != null)
                             {
                                 this.DataContext = usuarioActivo;
@@ -52,7 +52,7 @@ namespace SEKTY_ON
                         }
                         else
                         {
-                            irAlLogin();
+                            irAlRegistro();
                         }
                     }
                 }
@@ -70,6 +70,13 @@ namespace SEKTY_ON
         {
             LoginWindow ventanaLogin = new LoginWindow();
             ventanaLogin.Show();
+            this.Close();
+        }
+
+        private void irAlRegistro()
+        {
+            RegistroWindow ventanaRegistro = new RegistroWindow();
+            ventanaRegistro.Show();
             this.Close();
         }
 

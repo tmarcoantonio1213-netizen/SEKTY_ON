@@ -11,7 +11,7 @@ namespace SEKTY_ON.Desing.Clases
         {
             bool estaAbilitado = value is bool b && b;
 
-            return estaAbilitado ? "Abilitado" : "Desabilitado";
+            return estaAbilitado ? "Habilitado" : "Deshabilitado";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

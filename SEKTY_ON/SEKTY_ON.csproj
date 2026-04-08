@@ -78,6 +78,9 @@
     <Compile Include="PerfilWindow.xaml.cs">
       <DependentUpon>PerfilWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RegistroWindow.xaml.cs">
+      <DependentUpon>RegistroWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UsuariosPage.xaml.cs">
       <DependentUpon>UsuariosPage.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PerfilWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegistroWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

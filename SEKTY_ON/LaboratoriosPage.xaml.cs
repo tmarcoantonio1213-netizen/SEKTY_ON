@@ -109,24 +109,27 @@ namespace SEKTY_ON
 
             if (lab != null)
             {
-                MessageBox.Show($"¿Seguro que quieres eliminar el laboratorio {lab.Nombre}?",
+                var result = MessageBox.Show($"¿Seguro que quieres eliminar el laboratorio {lab.Nombre}?",
                     "Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                using (var client = new HttpClient())
+                if (result == MessageBoxResult.Yes)
                 {
-                    string url = $"https://localhost:7060/api/Laboratorios/{lab.Id}";
-
-                    HttpResponseMessage response = await client.DeleteAsync(url);
-
-                    if (response.IsSuccessStatusCode)
+                    using (var client = new HttpClient())
                     {
-                        MessageBox.Show("Laboratorio eliminado correctamente.");
+                        string url = $"https://localhost:7060/api/Laboratorios/{lab.Id}";
 
-                        await VisualizarLaboratorios();
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Error al eliminar: {lab.Nombre}");
+                        HttpResponseMessage response = await client.DeleteAsync(url);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Laboratorio eliminado correctamente.");
+
+                            await VisualizarLaboratorios();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Error al eliminar: {lab.Nombre}");
+                        }
                     }
                 }
             }

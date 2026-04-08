@@ -21,10 +21,12 @@ namespace SEKTY_ON
         private async void btnAgregarLab_Click(object sender, RoutedEventArgs e)
         {
             string nombreLab = txtNombreLab.Text;
+            string numeroLab = txtNumeroLab.Text;
             string edificioLab = txtEdificio.Text;
             int edificio;
+            int numero;
 
-            if (string.IsNullOrWhiteSpace(nombreLab) || string.IsNullOrWhiteSpace(edificioLab))
+            if (string.IsNullOrWhiteSpace(nombreLab) || string.IsNullOrWhiteSpace(edificioLab) || string.IsNullOrWhiteSpace(numeroLab))
             {
                 MessageBox.Show("Por favor, complete todos los campos.");
                 return;
@@ -45,15 +47,28 @@ namespace SEKTY_ON
                 {
                     if (numeroEdificio > 100)
                     {
-                        MessageBox.Show("Numero de edificio: No ingreses valores mayores a 100");
+                        MessageBox.Show("Numero de edificio: No ingreses un valor mayor a a 100");
                         return;
                     }
                     edificio = numeroEdificio;
                 }
-
+                if (int.TryParse(numeroLab, out int numeroLaboratorio) != true)
+                {
+                    MessageBox.Show("Numero de Laboratorio: Solo ingresa numeros enteros");
+                    return;
+                }
+                else
+                {
+                    if (numeroLaboratorio > 15)
+                    {
+                        MessageBox.Show("Numero de Laboratorio: No ingreses un valor mayor a 15");
+                        return;
+                    }
+                    numero = numeroLaboratorio;
+                }
             }
 
-            var laboratorio = new { Nombre = nombreLab, Edificio = edificio, EstadoId = 1, Abierto = false };
+            var laboratorio = new { Nombre = nombreLab, Edificio = edificio, EstadoId = 1, Abierto = false, Numero = numero };
 
             try
             {

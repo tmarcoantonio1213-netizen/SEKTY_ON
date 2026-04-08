@@ -17,5 +17,7 @@ namespace SEKTY_ON.Models
         public bool Activado { get; set; }
 
         public string Correo { get; set; }
+
+        public string Rol { get; set; }
     }
 }

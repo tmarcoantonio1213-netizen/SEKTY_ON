@@ -16,7 +16,7 @@
     <Grid Background="Gray">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="55"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -28,7 +28,8 @@
                 Content="Usuarios"
                 Foreground="Black"
                 FontSize="40" FontFamily="/Desing/Fonts/#Kikuta Thin"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                HorizontalAlignment="Center"
+                Margin="0,5,0,0"/>
 
         </StackPanel>
 
@@ -90,7 +91,6 @@
                             <Button Grid.Column="2" x:Name="btnAbilitarCuenta"
                                     Click="btnAbilitarCuenta_Click"
                                     BorderThickness="0"
-                                    Height="53"
                                     Margin="0,0,15,0">
 
                                 <Button.Template>
@@ -98,12 +98,11 @@
 
                                         <Border x:Name="bordeRedondo"
                                                 Background="#660636"
-                                                Height="50" Width="100"
-                                                CornerRadius="10"
-                                                HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                Height="50" Width="120"
+                                                CornerRadius="10">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
-                                        
+
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="bordeRedondo" Property="Background" Value="#590a2a"/>
@@ -111,18 +110,11 @@
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100"/>
-                                    </Grid.ColumnDefinitions>
-                                    
-                                    <TextBlock Grid.Column="0" x:Name="AbilitarCuneta"
-                                               Text="{Binding Abilitado, Converter={StaticResource AbilitarCuenta}}"
-                                               FontSize="15" FontFamily="/Desing/Fonts/#Zx Gamut Medium" Foreground="White"
-                                               HorizontalAlignment="Center"/>
-                                </Grid>
                                 
+                                <TextBlock Grid.Column="0" x:Name="AbilitarCuneta"
+                                           Text="{Binding Abilitado, Converter={StaticResource AbilitarCuenta}}"
+                                           FontSize="15" FontFamily="/Desing/Fonts/#Zx Gamut Medium" Foreground="White"/>
+
                             </Button>
                             
                         </Grid>

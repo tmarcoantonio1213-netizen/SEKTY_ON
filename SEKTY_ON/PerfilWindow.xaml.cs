@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SEKTY_ON.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -48,6 +49,8 @@ namespace SEKTY_ON
 
 
                         var usuarioActivo = responsables.FirstOrDefault(r => r.Activado == true);
+
+                        txtContraseña.Text = System.Text.Encoding.UTF8.GetString(usuarioActivo.Contraseña);
                         this.DataContext = usuarioActivo;
                     }
                 }
