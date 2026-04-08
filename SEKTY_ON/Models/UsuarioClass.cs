@@ -14,7 +14,7 @@ namespace SEKTY_ON.Models
 
         public byte[] Contraseña { get; set; }
 
-        public bool Abilitado { get; set; }
+        public bool? Abilitado { get; set; }
 
         public int PuestoId { get; set; }
 

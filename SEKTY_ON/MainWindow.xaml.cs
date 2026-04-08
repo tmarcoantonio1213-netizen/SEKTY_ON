@@ -102,6 +102,11 @@ namespace SEKTY_ON
             MainFrame.Navigate(new UsuariosPage());
         }
 
+        private void btnUsuariosMoviles_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new UsuriosMovilesPage());
+        }
+
         private void btnPerfil_Click(object sender, RoutedEventArgs e)
         {
             PerfilWindow ventanaPerfil = new PerfilWindow();

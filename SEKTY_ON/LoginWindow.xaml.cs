@@ -125,13 +125,7 @@ namespace SEKTY_ON
                                 }
                                 else
                                 {
-                                        string hashDb = BitConverter.ToString(usuario.Contraseña).Replace("-", "");
-                                        string hashIngresado = BitConverter.ToString(hashingresado).Replace("-", "");
-
-                                        MessageBox.Show($"ERROR DE VALIDACIÓN:\n\n" +
-                                                        $"DB: {hashDb}\n\n" +
-                                                        $"INGRESADO: {hashIngresado}");
-                                    
+                                    MessageBox.Show("Contraseña incorrecta");
                                 }
                             }
                             else
@@ -170,7 +164,15 @@ namespace SEKTY_ON
 
         private async Task IniciarSesion(Responsable usuario)
         {
-            usuario.Activado = true;
+            if (usuario.Activado != null)
+            {
+                usuario.Activado = true;
+            }
+            else
+            {
+                MessageBox.Show("Lo sentimos no tiene permitido iniciar sesión.");
+                return;
+            }
 
             using (var client = new HttpClient())
             {
@@ -202,7 +204,5 @@ namespace SEKTY_ON
 
             }
         }
-
-        private string ToHex(byte[] bytes) => BitConverter.ToString(bytes).Replace("-", "");
     }
 }

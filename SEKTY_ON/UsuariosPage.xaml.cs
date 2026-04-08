@@ -16,9 +16,24 @@ namespace SEKTY_ON
     /// </summary>
     public partial class UsuariosPage : Page
     {
+        // DependencyProperty to allow bindings from the DataTemplate to know admin activation
+        public static readonly DependencyProperty IsAdminActiveProperty = DependencyProperty.Register(
+            nameof(IsAdminActive), typeof(bool), typeof(UsuariosPage), new PropertyMetadata(false));
+
+        public bool IsAdminActive
+        {
+            get => (bool)GetValue(IsAdminActiveProperty);
+            set => SetValue(IsAdminActiveProperty, value);
+        }
+
         public UsuariosPage()
         {
             InitializeComponent();
+
+            // Set DataContext so bindings inside DataTemplate can reference this page's properties
+            this.DataContext = this;
+
+            ValidarAdministrador();
 
             _ = VisualizarUsuarios();
         }
@@ -29,18 +44,18 @@ namespace SEKTY_ON
             {
                 try
                 {
-                    string url = "https://localhost:7060/api/Usuarios";
+                    string url = "https://localhost:7060/api/Responsables";
 
                     HttpResponseMessage response = await client.GetAsync(url);
 
                     if (response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();
-                        List<Usuario> usuarios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Usuario>>(json);
+                        List<Responsable> responsables = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Responsable>>(json);
 
-                        if (usuarios != null)
+                        if (responsables != null)
                         {
-                            lstBxLaboratorios.ItemsSource = usuarios;
+                            lstBxLaboratorios.ItemsSource = responsables;
                         }
                     }
                     else
@@ -55,14 +70,103 @@ namespace SEKTY_ON
             }
         }
 
+        private async Task ValidarAdministrador()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string url = "https://localhost:7060/api/Responsables";
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        List<Responsable> responsables = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Responsable>>(json);
+
+                        var usuario = responsables.FirstOrDefault(r => r.Rol == "ADMINISTRADOR");
+
+                        if (usuario != null && usuario.Activado == true)
+                        {
+                            rowAgregarUsuario.Height = new GridLength(70);
+                            IsAdminActive = true; // allow item buttons to be visible via binding
+                        }
+                        else
+                        {
+                            rowAgregarUsuario.Height = new GridLength(0);
+                            IsAdminActive = false; // hide item buttons via binding
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se puedo conectar a la base de datos");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
+        }
+
+        private async void btnAgregarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            RegistroWindow ventanaRegistro = new RegistroWindow();
+            ventanaRegistro.Show();
+            Window.GetWindow(this)?.Close();
+        }
+
+        private async void btnEliminarCuenta_Click(object sender, RoutedEventArgs e)
+        {
+            Button botonPresionado = sender as Button;
+            Responsable res = botonPresionado.DataContext as Responsable;
+
+            if (res != null)
+            {
+                var result = MessageBox.Show($"¿Seguro que quieres eliminar a {res.Nombre}?",
+                    "Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    using (var client = new HttpClient())
+                    {
+                        string url = $"https://localhost:7060/api/Responsables/{res.Id}";
+
+                        HttpResponseMessage response = await client.DeleteAsync(url);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Usuario eliminado correctamente.");
+
+                            await VisualizarUsuarios();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Error al eliminar: {res.Nombre}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se pudo obtener la información del Usuario.");
+                return;
+            }
+        }
+
         private async void btnAbilitarCuenta_Click(object sender, RoutedEventArgs e)
         {
             Button botonPresionado = sender as Button;
-            Usuario lab = botonPresionado.DataContext as Usuario;
+            Responsable lab = botonPresionado.DataContext as Responsable;
 
-            if (lab != null)
+            if (lab.Activado == false)
             {
-                lab.Abilitado = !lab.Abilitado;
+                lab.Activado = null;
+            }
+            else if (lab.Activado == null)
+            {
+                lab.Activado = false;
             }
             else
             {
@@ -71,7 +175,7 @@ namespace SEKTY_ON
 
             using (var client = new HttpClient())
             {
-                string url = $"https://localhost:7060/api/Usuarios/{lab.Id}";
+                string url = $"https://localhost:7060/api/Responsables/{lab.Id}";
 
                 var json = JsonConvert.SerializeObject(lab);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -85,7 +189,7 @@ namespace SEKTY_ON
                 else
                 {
                     MessageBox.Show("No se guardaron los cambios.");
-                    lab.Abilitado = !lab.Abilitado;
+                    lab.Activado = true;
                 }
             }
         }

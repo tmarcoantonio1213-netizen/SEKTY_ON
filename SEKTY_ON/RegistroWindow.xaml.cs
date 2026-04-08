@@ -98,8 +98,8 @@ namespace SEKTY_ON
             }
 
             // se valida el primer usuario para ver si se le asigna el rol de administrador
-            bool esAdmin = await ValidarAdministrador();
-            string rolAsignado = esAdmin ? "ADMINISTRADOR" : "USUARIO";
+            bool crearAdmin = await ValidarAdministrador();
+            string rolAsignado = crearAdmin ? "ADMINISTRADOR" : "USUARIO";
 
             // convierto pasword a hash
             byte[] passwordHash;
@@ -108,8 +108,14 @@ namespace SEKTY_ON
                 passwordHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
 
+            bool activado = false;
+            if (rolAsignado == "ADMINISTRADOR")
+            {
+                activado = true;
+            }
+
             // guardar datos en la base de datos
-            var loginData = new { Nombre = username, Contraseña = passwordHash, Activado = true, Correo = correo, Rol = rolAsignado };
+            var loginData = new { Nombre = username, Contraseña = passwordHash, Activado = activado, Correo = correo, Rol = rolAsignado };
 
             try
             {

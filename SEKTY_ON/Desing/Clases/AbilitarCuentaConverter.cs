@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace SEKTY_ON.Desing.Clases
 {
-    internal class AbilitarCuentaConverter : IValueConverter
+    public class AbilitarCuentaConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool estaAbilitado = value is bool b && b;
+            bool? estaAbilitado = value as bool?;
 
-            return estaAbilitado ? "Habilitado" : "Deshabilitado";
+            if (estaAbilitado == true)
+            {
+                return "Habilitado";
+            }
+            else if (estaAbilitado == false)
+            {
+                return "Habilitado";
+            }
+            else
+            {
+                return "Deshabilitado";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

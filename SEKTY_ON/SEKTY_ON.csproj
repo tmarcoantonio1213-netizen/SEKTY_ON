@@ -84,6 +84,9 @@
     <Compile Include="UsuariosPage.xaml.cs">
       <DependentUpon>UsuariosPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UsuriosMovilesPage.xaml.cs">
+      <DependentUpon>UsuriosMovilesPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="AgregarLabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UsuariosPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UsuriosMovilesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +218,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Desing\Iconos\correoUsuario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Desing\Iconos\usuarioMovil.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
