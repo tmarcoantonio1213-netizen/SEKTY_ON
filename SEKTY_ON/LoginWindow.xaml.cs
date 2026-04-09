@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SEKTY_ON.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,15 +12,18 @@ using System.Windows.Input;
 
 namespace SEKTY_ON
 {
-    /// <summary>
-    /// Lógica de interacción para LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
+
+        private readonly string urlApi = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables";
+
         public LoginWindow()
         {
             InitializeComponent();
         }
+
+        #region Lógica de Visibilidad de Contraseña
+
 
         private void btnVerContraseña_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -30,179 +32,150 @@ namespace SEKTY_ON
             txtPasswordVisible.Visibility = Visibility.Visible;
         }
 
-        private void btnVerContraseña_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            OcultarContraseña();
-        }
 
-        private void OcultarContraseña()
+        private void btnVerContraseña_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             txtPasswordVisible.Visibility = Visibility.Collapsed;
             txtPassword.Visibility = Visibility.Visible;
             txtPassword.Focus();
         }
 
+        #endregion
+
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string identidad = txtIdentidad.Text.Trim();
             string password = txtPassword.Password.Trim();
-
-            bool medio;
+            bool esNombreUsuario;
 
             if (string.IsNullOrWhiteSpace(identidad) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Por favor, complete todos los campos.");
+                MessageBox.Show("Por favor, complete todos los campos.", "Aviso");
                 return;
+            }
+
+            // Validación de formato
+            string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            if (!Regex.IsMatch(identidad, patronCorreo))
+            {
+                if (identidad.Length > 50) { MessageBox.Show("Usuario demasiado largo."); return; }
+                esNombreUsuario = true;
             }
             else
             {
-                string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-                if (!Regex.IsMatch(identidad, patronCorreo))
+                if (identidad.Length > 100) { MessageBox.Show("Correo demasiado largo."); return; }
+                if (!identidad.EndsWith("@gmail.com") && !identidad.EndsWith("@uptcamac.edu.mx"))
                 {
-                    if (identidad.Length > 50)
-                    {
-                        MessageBox.Show("Nombre de usuario: No ingreses mas de 50 caracteres.");
-                        return;
-                    }
-                    medio = true;
-                }
-                else
-                {
-                    if (identidad.Length > 100)
-                    {
-                        MessageBox.Show("Correo electronico: No ingreses mas de 100 caracteres.");
-                        return;
-                    }
-                    if (!identidad.EndsWith("@gmail.com") && !identidad.EndsWith("@uptcamac.edu.mx"))
-                    {
-                        MessageBox.Show("Solo se permiten correos de dominios conocidos.");
-                        return;
-                    }
-                    medio = false;
-                }
-
-                if (password.Length != 8)
-                {
-                    MessageBox.Show("Contraseña: Debe poseer solo 8 caracteres.");
+                    MessageBox.Show("Dominio de correo no permitido.");
                     return;
                 }
-
-                await ValidarUsuario(password, identidad, medio);
+                esNombreUsuario = false;
             }
+
+            if (password.Length != 8)
+            {
+                MessageBox.Show("La contraseña debe tener exactamente 8 caracteres.");
+                return;
+            }
+
+            await ValidarUsuario(password, identidad, esNombreUsuario);
         }
 
-        private async Task ValidarUsuario(string password, string identidad, bool medio)
+        private async Task ValidarUsuario(string password, string identidad, bool esNombreUsuario)
         {
             byte[] hashingresado;
-
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
-                hashingresado = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                hashingresado = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
 
             using (var client = new HttpClient())
             {
                 try
                 {
-                    string url = "https://localhost:7060/api/Responsables";
-
-                    HttpResponseMessage response = await client.GetAsync(url);
+                    HttpResponseMessage response = await client.GetAsync(urlApi);
 
                     if (response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();
-                        List<Responsable> responsables = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Responsable>>(json);
+                        List<Responsable> responsables = JsonConvert.DeserializeObject<List<Responsable>>(json);
 
-                        if (medio == true)
+
+                        Responsable usuario = esNombreUsuario
+                            ? responsables.FirstOrDefault(r => r.Nombre == identidad)
+                            : responsables.FirstOrDefault(r => r.Correo == identidad);
+
+                        if (usuario != null)
                         {
-                            var usuario = responsables.FirstOrDefault(r => r.Nombre == identidad);
 
-                            if (usuario != null)
+                            if (usuario.Contraseña.SequenceEqual(hashingresado))
                             {
-                                if (usuario.Contraseña.SequenceEqual(hashingresado))
-                                {
-                                    IniciarSesion(usuario);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Contraseña incorrecta");
-                                }
+                                await IniciarSesion(usuario);
                             }
                             else
                             {
-                                MessageBox.Show("El usuario no existe");
+                                MessageBox.Show("Contraseña incorrecta.", "Error de acceso");
                             }
                         }
                         else
                         {
-                            var usuario = responsables.FirstOrDefault(r => r.Correo == identidad);
-
-                            if (usuario != null)
-                            {
-                                if (usuario.Contraseña.SequenceEqual(hashingresado))
-                                {
-                                    IniciarSesion(usuario);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Contraseña incorrecta");
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("El usuario no existe");
-                            }
+                            MessageBox.Show("El usuario no existe.", "Error");
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al obtener datos de la API.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al validar el Contraseña: {ex.Message}");
+                    MessageBox.Show($"Error al conectar con el servidor: {ex.Message}");
                 }
             }
         }
 
         private async Task IniciarSesion(Responsable usuario)
         {
-            if (usuario.Activado != null)
+
+            if (usuario.Activado == null)
             {
-                usuario.Activado = true;
-            }
-            else
-            {
-                MessageBox.Show("Lo sentimos no tiene permitido iniciar sesión.");
+                MessageBox.Show("Tu cuenta no ha sido autorizada para iniciar sesión.", "Acceso denegado");
                 return;
             }
+
+            usuario.Activado = true; // Marcamos como activo/sesión iniciada
 
             using (var client = new HttpClient())
             {
                 try
                 {
-                    string url = $"https://localhost:7060/api/Responsables/{usuario.Id}";
-
                     var json = JsonConvert.SerializeObject(usuario);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    HttpResponseMessage response = await client.PutAsync(url, content);
+                    HttpResponseMessage response = await client.PutAsync($"{urlApi}/{usuario.Id}", content);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MainWindow ventanaLaboratorios = new MainWindow();
-                        ventanaLaboratorios.Show();
+                        MainWindow main = new MainWindow();
+                        main.Show();
                         this.Close();
                     }
                     else
                     {
-                        string errorDetalle = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show($"No se pudo iniciar sesion.\nError: {response.StatusCode}: {errorDetalle}");
+                        MessageBox.Show("Sesión validada, pero no se pudo actualizar el estado en el servidor.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error de red: {ex.Message}");
+                    MessageBox.Show($"Error de red al actualizar estado: {ex.Message}");
                 }
-
             }
+        }
+
+
+        private void btnOlvidastePassword_Click(object sender, RoutedEventArgs e)
+        {
+            RecoveryWindow recovery = new RecoveryWindow();
+            recovery.ShowDialog();
         }
     }
 }

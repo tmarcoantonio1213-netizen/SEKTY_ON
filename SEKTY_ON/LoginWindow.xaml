@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="800"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <Image Grid.Column="0"
                    Height="580" Width="580"
                    Source="/Desing/Images/pizarra.png"/>
@@ -130,7 +130,8 @@
                                 BorderThickness="0"
                                 Content="¿Olvidaste tu Contraseña?"
                                 FontSize="17" Foreground="#660636"
-                                Margin="0,50,0,0">
+                                Margin="0,50,0,0"
+                                Click="btnOlvidastePassword_Click">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="borderRedondo"
@@ -183,7 +184,7 @@
                 </StackPanel>
 
             </Border>
-            
+
         </Grid>
 
         <StackPanel Grid.Row="1"

@@ -44,7 +44,7 @@ namespace SEKTY_ON
             {
                 try
                 {
-                    string url = "https://localhost:7060/api/Responsables";
+                    string url = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables";
 
                     HttpResponseMessage response = await client.GetAsync(url);
 
@@ -76,7 +76,7 @@ namespace SEKTY_ON
             {
                 try
                 {
-                    string url = "https://localhost:7060/api/Responsables";
+                    string url = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables";
 
                     HttpResponseMessage response = await client.GetAsync(url);
 
@@ -131,7 +131,7 @@ namespace SEKTY_ON
                 {
                     using (var client = new HttpClient())
                     {
-                        string url = $"https://localhost:7060/api/Responsables/{res.Id}";
+                        string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables/{res.Id}";
 
                         HttpResponseMessage response = await client.DeleteAsync(url);
 
@@ -175,7 +175,7 @@ namespace SEKTY_ON
 
             using (var client = new HttpClient())
             {
-                string url = $"https://localhost:7060/api/Responsables/{lab.Id}";
+                string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables/{lab.Id}";
 
                 var json = JsonConvert.SerializeObject(lab);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");

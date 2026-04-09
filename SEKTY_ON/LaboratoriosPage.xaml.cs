@@ -41,7 +41,7 @@ namespace SEKTY_ON
             {
                 try
                 {
-                    string url = "https://localhost:7060/api/Laboratorios";
+                    string url = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Laboratorios";
 
                     HttpResponseMessage response = await client.GetAsync(url);
 
@@ -83,7 +83,7 @@ namespace SEKTY_ON
 
             using (var client = new HttpClient())
             {
-                string url = $"https://localhost:7060/api/Laboratorios/{lab.Id}";
+                string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Laboratorios/{lab.Id}";
 
                 var json = JsonConvert.SerializeObject(lab);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -116,7 +116,7 @@ namespace SEKTY_ON
                 {
                     using (var client = new HttpClient())
                     {
-                        string url = $"https://localhost:7060/api/Laboratorios/{lab.Id}";
+                        string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Laboratorios/{lab.Id}";
 
                         HttpResponseMessage response = await client.DeleteAsync(url);
 

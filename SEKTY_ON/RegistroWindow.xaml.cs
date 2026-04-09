@@ -121,7 +121,7 @@ namespace SEKTY_ON
             {
                 using (var client = new HttpClient())
                 {
-                    string url = "https://localhost:7060/api/Responsables";
+                    string url = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables";
 
                     var json = JsonConvert.SerializeObject(loginData);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -160,7 +160,7 @@ namespace SEKTY_ON
             {
                 try
                 {
-                    string url = "https://localhost:7060/api/Responsables";
+                    string url = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables";
 
                     HttpResponseMessage response = await client.GetAsync(url);
 
