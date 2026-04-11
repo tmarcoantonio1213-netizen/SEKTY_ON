@@ -4,106 +4,70 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SEKTY_ON"
-      xmlns:modelsClases="clr-namespace:SEKTY_ON.Desing.Clases"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UsuriosMovilesPage">
 
     <Page.Resources>
-        <modelsClases:AbilitarCuentaConverter x:Key="AbilitarCuenta"/>
+        <local:AbilitarCuentaConverter x:Key="AbilitarCuenta"/>
     </Page.Resources>
 
     <Grid Background="Gray">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="70" x:Name="rowAgregarUsuario"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
-                    Background="White">
-
-            <Label
-                Background="White"
-                Content="Usuarios"
-                Foreground="Black"
-                FontSize="40" FontFamily="/Desing/Fonts/#Kikuta Thin"
-                HorizontalAlignment="Center"
-                Margin="0,5,0,0"/>
-
+        <StackPanel Grid.Row="0" Background="White">
+            <Label Content="Usuarios Móviles" 
+                   Foreground="Black" FontSize="35" 
+                   FontFamily="/Desing/Fonts/#Kikuta Thin"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
         </StackPanel>
 
         <ListBox Grid.Row="1" x:Name="lstBxLaboratorios"
-                 Background="#BBBBBB"
-                 BorderThickness="0"
+                 Background="#BBBBBB" BorderThickness="0"
+                 HorizontalContentAlignment="Stretch"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <ContentPresenter/>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border
-                        Background="Transparent"
-                        Height="70"
-                        Margin="10,8,10,8">
-
+                    <Border Background="Transparent" Height="80" Margin="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0"
-                                   Height="80" Width="80"
+                            <Image Grid.Column="0" Height="60" Width="60"
                                    Source="/Desing/Iconos/usuarioPerfil.png"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Row="0"
-                                           Text="{Binding Nombre}"
-                                           FontSize="27" FontFamily="/Desing/Fonts/#Zx Gamut Bold" Foreground="#660636"
-                                           Margin="15,7,0,0"/>
-
-                                <TextBlock Grid.Row="1"
-                                           Text="{Binding Puesto.Tipo, StringFormat='Rol: {0}'}"
-                                           FontSize="18" FontFamily="/Desing/Fonts/#Zx Gamut"
-                                           Margin="15,0,0,0"/>
-                            </Grid>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                                <TextBlock Text="{Binding Nombre}"
+                                           FontSize="22" FontWeight="Bold" Foreground="#660636"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Rol, StringFormat='Rol: {0}'}"
+                                           FontSize="16" Foreground="#333333"/>
+                            </StackPanel>
 
                             <Button Grid.Column="2" x:Name="btnAbilitarCuenta"
                                     Click="btnAbilitarCuenta_Click"
-                                    BorderThickness="0"
-                                    Margin="0,0,15,0">
-
+                                    VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    Margin="0,0,10,0" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
-
-                                        <Border x:Name="bordeRedondo"
+                                        <Border x:Name="bordeRedondo" 
                                                 Background="#660636"
-                                                Height="50" Width="120"
+                                                Height="45" Width="130" 
                                                 CornerRadius="10">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Abilitado, Converter={StaticResource AbilitarCuenta}}"
+                                                       FontSize="14" Foreground="White"
+                                                       HorizontalAlignment="Center" 
+                                                       VerticalAlignment="Center"/>
                                         </Border>
-
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="bordeRedondo" Property="Background" Value="#590a2a"/>
@@ -111,48 +75,27 @@
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
-
-                                <TextBlock Grid.Column="0" x:Name="AbilitarCuneta"
-                                           Text="{Binding Abilitado, Converter={StaticResource AbilitarCuenta}}"
-                                           FontSize="15" FontFamily="/Desing/Fonts/#Zx Gamut Medium" Foreground="White"/>
-
                             </Button>
-
                         </Grid>
-
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
         <DockPanel Grid.Row="2" Background="White">
-
-            <Button x:Name="btnAgregarUsuario"
-                    Height="55" Width="210"
-                    Background="#660636"
-                    FontSize="17" FontWeight="Bold" Foreground="White"
-                    Content="Agregar Usuario Movil"
-                    BorderBrush="Transparent"
-                    Padding="20,0">
+            <Button x:Name="btnAgregarUsuario" Content="Agregar Usuario Móvil"
+                    Height="50" Width="220" Background="#660636" Foreground="White"
+                    FontSize="16" FontWeight="SemiBold"
+                    Click="btnAgregarUsuario_Click"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="borderRedondo"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="10" 
-                                BorderThickness="0"
-                                Padding="{TemplateBinding Padding}">
+                        <Border x:Name="borderRedondo" Background="{TemplateBinding Background}" CornerRadius="12">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="borderRedondo" Property="Opacity" Value="0.8"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
         </DockPanel>
-
     </Grid>
 </Page>

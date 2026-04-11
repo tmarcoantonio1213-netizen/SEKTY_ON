@@ -16,7 +16,7 @@ namespace SEKTY_ON
     /// </summary>
     public partial class UsuariosPage : Page
     {
-        // DependencyProperty to allow bindings from the DataTemplate to know admin activation
+
         public static readonly DependencyProperty IsAdminActiveProperty = DependencyProperty.Register(
             nameof(IsAdminActive), typeof(bool), typeof(UsuariosPage), new PropertyMetadata(false));
 
@@ -30,7 +30,7 @@ namespace SEKTY_ON
         {
             InitializeComponent();
 
-            // Set DataContext so bindings inside DataTemplate can reference this page's properties
+ 
             this.DataContext = this;
 
             ValidarAdministrador();
@@ -90,12 +90,12 @@ namespace SEKTY_ON
                         if (usuario != null && usuario.Activado == true)
                         {
                             rowAgregarUsuario.Height = new GridLength(70);
-                            IsAdminActive = true; // allow item buttons to be visible via binding
+                            IsAdminActive = true; 
                         }
                         else
                         {
                             rowAgregarUsuario.Height = new GridLength(0);
-                            IsAdminActive = false; // hide item buttons via binding
+                            IsAdminActive = false; 
                         }
                     }
                     else
@@ -160,36 +160,61 @@ namespace SEKTY_ON
             Button botonPresionado = sender as Button;
             Responsable lab = botonPresionado.DataContext as Responsable;
 
+            if (lab == null)
+            {
+                MessageBox.Show("No se pudo obtener información del usuario");
+                return;
+            }
+
+   
+            if (lab.Rol == "ADMINISTRADOR")
+            {
+                MessageBox.Show("No se puede cambiar el estado de una cuenta de Administrador.");
+                return;
+            }
+
             if (lab.Activado == false)
             {
                 lab.Activado = null;
             }
+ 
             else if (lab.Activado == null)
             {
                 lab.Activado = false;
             }
+   
             else
             {
-                MessageBox.Show("No se pudo obtener iformacion del usuario");
+                lab.Activado = false;
             }
 
             using (var client = new HttpClient())
             {
-                string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables/{lab.Id}";
-
-                var json = JsonConvert.SerializeObject(lab);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await client.PutAsync(url, content);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    await VisualizarUsuarios();
+                    string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Responsables/{lab.Id}";
+
+      
+                    var json = JsonConvert.SerializeObject(lab);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        await VisualizarUsuarios();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se guardaron los cambios en el servidor.");
+
+                        await VisualizarUsuarios();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No se guardaron los cambios.");
-                    lab.Activado = true;
+                    MessageBox.Show($"Error al conectar con el servidor: {ex.Message}");
                 }
             }
         }

@@ -26,7 +26,6 @@ namespace SEKTY_ON
         public UsuriosMovilesPage()
         {
             InitializeComponent();
-
             _ = VisualizarUsuarios();
         }
 
@@ -37,13 +36,12 @@ namespace SEKTY_ON
                 try
                 {
                     string url = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Usuarios";
-
                     HttpResponseMessage response = await client.GetAsync(url);
 
                     if (response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();
-                        List<Usuario> usuarios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Usuario>>(json);
+                        List<Usuario> usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json);
 
                         if (usuarios != null)
                         {
@@ -62,39 +60,85 @@ namespace SEKTY_ON
             }
         }
 
+        private void btnAgregarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            RegistroWindow ventanaRegistro = new RegistroWindow();
+            ventanaRegistro.Show();
+            Window.GetWindow(this)?.Close();
+        }
+
         private async void btnAbilitarCuenta_Click(object sender, RoutedEventArgs e)
         {
             Button botonPresionado = sender as Button;
-            Usuario lab = botonPresionado.DataContext as Usuario;
+            Usuario user = botonPresionado?.DataContext as Usuario;
 
-            if (lab != null)
+            if (user == null)
             {
-                lab.Abilitado = !lab.Abilitado;
+                MessageBox.Show("No se pudo obtener información del usuario");
+                return;
+            }
+
+
+            if (user.Abilitado == true)
+            {
+
+                user.Abilitado = false;
+            }
+            else if (user.Abilitado == false)
+            {
+
+                user.Abilitado = null;
             }
             else
             {
-                MessageBox.Show("No se pudo obtener iformacion del usuario");
+
+                user.Abilitado = true;
             }
 
             using (var client = new HttpClient())
             {
-                string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Usuarios/{lab.Id}";
-
-                var json = JsonConvert.SerializeObject(lab);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await client.PutAsync(url, content);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    await VisualizarUsuarios();
+                    string url = $"https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Usuarios/{user.Id}";
+                    var json = JsonConvert.SerializeObject(user);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        await VisualizarUsuarios();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudieron guardar los cambios en el servidor.");
+                        await VisualizarUsuarios();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No se guardaron los cambios.");
-                    lab.Abilitado = !lab.Abilitado;
+                    MessageBox.Show($"Error de conexión: {ex.Message}");
                 }
             }
+        }
+    }
+
+   
+    public class AbilitarCuentaConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            bool? estado = (bool?)value;
+
+            if (estado == true) return "Habilitado";
+            if (estado == false) return "Deshabilitado";
+            return "Pendiente"; 
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

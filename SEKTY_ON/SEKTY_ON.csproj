@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddUserMovWindow.xaml.cs">
+      <DependentUpon>AddUserMovWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AgregarLabPage.xaml.cs">
       <DependentUpon>AgregarLabPage.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
     <Compile Include="UsuriosMovilesPage.xaml.cs">
       <DependentUpon>UsuriosMovilesPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddUserMovWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AgregarLabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
