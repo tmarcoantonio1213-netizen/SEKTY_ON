@@ -60,7 +60,11 @@
                                     </Button.Style>
                                 </Button>
 
-                                <Button Content="Rechazar ✖" Background="Red" Foreground="White" Width="100" Margin="5" Height="30" Click="BtnRechazar_Click">
+                                <Button Content="Rechazar ✖" Background= "Red" 
+                                        Foreground="White"
+                                        Width="100" Margin="5"
+                                        Height="30" 
+                                        Click="BtnRechazar_Click">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed"/>

@@ -14,7 +14,7 @@ namespace SEKTY_ON
     public partial class PeticionesPage : Page
     {
         private List<Peticion> todasLasPeticiones = new List<Peticion>();
-        private string urlApi = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api";
+        private string urlApi = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Peticiones";
 
         public PeticionesPage()
         {
