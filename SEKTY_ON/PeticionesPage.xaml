@@ -41,9 +41,10 @@
                             </Ellipse>
 
                             <StackPanel Grid.Column="1" Margin="15,0,10,0">
-                                <TextBlock Text="{Binding UsuarioId, StringFormat='Usuario: {0}'}" FontWeight="Bold" FontSize="14"/>
-                                <TextBlock Text="{Binding LaboratorioId, StringFormat='Laboratorio: {0}'}" Margin="0,2,0,5"/>
-                                <TextBlock Text="{Binding FechaInicio, StringFormat='Fecha: {0:dd/MM/yyyy}'}" FontSize="11"/>
+                                <TextBlock Text="{Binding UsuarioId, StringFormat='Usuario ID: {0}'}" FontWeight="Bold" FontSize="14"/>
+                                <TextBlock Text="{Binding LaboratorioId, StringFormat='Laboratorio ID: {0}'}" Margin="0,2,0,5"/>
+                                <TextBlock Text="{Binding FechaCreacion, StringFormat='Solicitado el: {0:dd/MM/yyyy HH:mm}'}" FontSize="11" Foreground="Gray"/>
+                                <TextBlock Text="{Binding Notas, StringFormat='Notas: {0}'}" FontSize="12" FontStyle="Italic" Margin="0,5,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
@@ -60,11 +61,7 @@
                                     </Button.Style>
                                 </Button>
 
-                                <Button Content="Rechazar ✖" Background= "Red" 
-                                        Foreground="White"
-                                        Width="100" Margin="5"
-                                        Height="30" 
-                                        Click="BtnRechazar_Click">
+                                <Button Content="Rechazar ✖" Background="Red" Foreground="White" Width="100" Margin="5" Height="30" Click="BtnRechazar_Click">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -83,8 +80,10 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <TextBlock x:Name="txtMensajeOcupado" Text="No puedes aceptar la petición porque el laboratorio está ocupado o en mantenimiento"
+        <TextBlock x:Name="txtMensajeOcupado" 
+                   Text="No puedes aceptar la petición porque el laboratorio está ocupado o en mantenimiento"
                    Foreground="Red" FontSize="12" Margin="20,0,0,10"
+                   HorizontalAlignment="Center"
                    VerticalAlignment="Bottom" Visibility="Collapsed"/>
     </Grid>
 </Page>

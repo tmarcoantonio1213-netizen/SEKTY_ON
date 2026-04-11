@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SEKTY_ON.Models
 {
-    public class Responsable
+    public partial class Responsable
     {
         public int Id { get; set; }
 

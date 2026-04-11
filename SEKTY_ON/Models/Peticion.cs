@@ -1,26 +1,28 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SEKTY_ON.Models
 {
-    public class Peticion
+    public partial class Peticion
     {
-        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty("usuarioId")]
         public int UsuarioId { get; set; }
 
-        [JsonProperty("laboratorioId")]
         public int LaboratorioId { get; set; }
 
-        [JsonProperty("fechaInicio")]
         public DateTime FechaInicio { get; set; }
 
-        [JsonProperty("fechaTermino")]
         public DateTime FechaTermino { get; set; }
 
-        [JsonProperty("estatus")]
         public bool? Estatus { get; set; }
+
+        public DateTime FechaCreacion { get; set; }
+
+        public string Notas { get; set; }
+
+        public virtual Laboratorio Laboratorio { get; set; }
+
+        public virtual Usuario Usuario { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace SEKTY_ON
     public partial class PeticionesPage : Page
     {
         private List<Peticion> todasLasPeticiones = new List<Peticion>();
-        private string urlApi = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api/Peticiones";
+        private string urlApi = "https://8jr3q3p7-7060.usw3.devtunnels.ms/api";
 
         public PeticionesPage()
         {
@@ -33,10 +33,10 @@ namespace SEKTY_ON
                     {
                         string json = await response.Content.ReadAsStringAsync();
                         todasLasPeticiones = JsonConvert.DeserializeObject<List<Peticion>>(json);
-                        lvPeticiones.ItemsSource = todasLasPeticiones;
+                        ActualizarVistaConFiltro();
                     }
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                catch (Exception ex) { Console.WriteLine("Error API: " + ex.Message); }
             }
         }
 
@@ -53,8 +53,9 @@ namespace SEKTY_ON
                     if (resLab.IsSuccessStatusCode)
                     {
                         string content = await resLab.Content.ReadAsStringAsync();
-                        
-                        if (content.ToLower().Contains("\"abierto\":false"))
+                        string jsonLimpio = content.Replace(" ", "").Replace("\n", "").Replace("\r", "");
+
+                        if (!jsonLimpio.Contains("\"estadoId\":1"))
                         {
                             txtMensajeOcupado.Visibility = Visibility.Visible;
                             return;
@@ -80,30 +81,45 @@ namespace SEKTY_ON
         {
             using (var client = new HttpClient())
             {
-                var json = JsonConvert.SerializeObject(p);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                await client.PutAsync($"{urlApi}/Peticiones/{p.Id}", content);
-                await VisualizarPeticiones();
+                try
+                {
+                    p.Laboratorio = null;
+                    p.Usuario = null;
+
+                    var json = JsonConvert.SerializeObject(p);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await client.PutAsync($"{urlApi}/Peticiones/{p.Id}", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await VisualizarPeticiones();
+                    }
+                    else
+                    {
+                        string error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Error al actualizar: " + error);
+                    }
+                }
+                catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
             }
         }
 
-        private void FiltroEstado_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FiltroEstado_SelectionChanged(object sender, SelectionChangedEventArgs e) => ActualizarVistaConFiltro();
+
+        private void ActualizarVistaConFiltro()
         {
             if (lvPeticiones == null || todasLasPeticiones == null) return;
-
-            ComboBoxItem item = (ComboBoxItem)cbFiltro.SelectedItem;
-            if (item == null) return;
-
-            string filtro = item.Content.ToString();
-
-            if (filtro == "Pendientes")
-                lvPeticiones.ItemsSource = todasLasPeticiones.Where(x => x.Estatus == null).ToList();
-            else if (filtro == "Aprobadas")
-                lvPeticiones.ItemsSource = todasLasPeticiones.Where(x => x.Estatus == true).ToList();
-            else if (filtro == "Rechazadas")
-                lvPeticiones.ItemsSource = todasLasPeticiones.Where(x => x.Estatus == false).ToList(); 
-            else
-                lvPeticiones.ItemsSource = todasLasPeticiones;
+            if (cbFiltro.SelectedItem is ComboBoxItem item)
+            {
+                string filtro = item.Content.ToString();
+                switch (filtro)
+                {
+                    case "Pendientes": lvPeticiones.ItemsSource = todasLasPeticiones.Where(x => x.Estatus == null).ToList(); break;
+                    case "Aprobadas": lvPeticiones.ItemsSource = todasLasPeticiones.Where(x => x.Estatus == true).ToList(); break;
+                    case "Rechazadas": lvPeticiones.ItemsSource = todasLasPeticiones.Where(x => x.Estatus == false).ToList(); break;
+                    default: lvPeticiones.ItemsSource = todasLasPeticiones.ToList(); break;
+                }
+            }
         }
     }
 }
