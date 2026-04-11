@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SEKTY_ON.Models
 {
-    internal class Estado
+    public class Estado
     {
         public int Id { get; set; }
 

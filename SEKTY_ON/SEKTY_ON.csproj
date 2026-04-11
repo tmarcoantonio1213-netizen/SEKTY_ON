@@ -73,11 +73,15 @@
     </Compile>
     <Compile Include="Models\EstadoClass.cs" />
     <Compile Include="Models\LaboratorioClass.cs" />
+    <Compile Include="Models\PeticionClass.cs" />
     <Compile Include="Models\PuestoClass.cs" />
     <Compile Include="Models\ResponsableClass.cs" />
     <Compile Include="Models\UsuarioClass.cs" />
     <Compile Include="PerfilWindow.xaml.cs">
       <DependentUpon>PerfilWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PeticionesPage.xaml.cs">
+      <DependentUpon>PeticionesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="RecoveryWindow.xaml.cs">
       <DependentUpon>RecoveryWindow.xaml</DependentUpon>
@@ -116,6 +120,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PerfilWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PeticionesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
