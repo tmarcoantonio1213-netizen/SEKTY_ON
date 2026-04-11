@@ -49,6 +49,41 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <Border
+                        Background="#660636"
+                        Height="100"
+                        CornerRadius="20"
+                        Margin="10,8,10,8">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="80"/>
+                                    <RowDefinition Height=""
+                                </Grid.RowDefinitions>
+                            </Grid>
+
+                            <Image Grid.Column="0"
+                                   Height="80" Width="80"
+                                   Source="/Desing/Iconos/usuarioPerfil.png"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+
+                            
+                        </Grid>
+
+                    </Border>
 
                 </DataTemplate>
             </ListBox.ItemTemplate>
