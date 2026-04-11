@@ -30,7 +30,7 @@ namespace SEKTY_ON
                 Nombre = txtNombre.Text.Trim(),
                 Contraseña = CalcularHash(txtPassword.Password), 
                 Abilitado = true, 
-                PuestoId = 1 
+                PuestoId = 1
             };
 
             using (HttpClient client = new HttpClient())

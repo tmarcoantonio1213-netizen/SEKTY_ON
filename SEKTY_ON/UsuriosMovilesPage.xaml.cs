@@ -62,9 +62,9 @@ namespace SEKTY_ON
 
         private void btnAgregarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            RegistroWindow ventanaRegistro = new RegistroWindow();
+            AddUserMovWindow ventanaRegistro = new AddUserMovWindow();
             ventanaRegistro.Show();
-            Window.GetWindow(this)?.Close();
+            Window.GetWindow(this);
         }
 
         private async void btnAbilitarCuenta_Click(object sender, RoutedEventArgs e)
