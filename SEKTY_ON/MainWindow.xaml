@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0"
-            Background="#660636">
+                    Background="#660636">
 
             <Label
                 Content="Menú"
@@ -30,145 +30,140 @@
                     BorderThickness="0"
                     Margin="0,0,0,20"
                     HorizontalContentAlignment="Left">
-
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="fondo" Background="{TemplateBinding Background}">
-                                        <ContentPresenter
-                                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
-
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
                                         </Trigger>
-
                                         <Trigger Property="IsPressed" Value="True">
                                             <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
                                         </Trigger>
-
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
                 </Button.Style>
-
                 <StackPanel Orientation="Horizontal">
-                    <Image
-                        Height="30" Width="30"
-                        Source="/Desing/Iconos/laboratoriosMenu.png"
-                        Margin="15,0,10,0"/>
-                    <Label
-                        Content="Laboratorios"
-                        Foreground="White"
-                        FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
+                    <Image Height="30" Width="30" Source="/Desing/Iconos/laboratoriosMenu.png" Margin="15,0,10,0"/>
+                    <Label Content="Laboratorios" Foreground="White" FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
                 </StackPanel>
             </Button>
-            
-            <Button
-                x:Name="btnUsuarios"
-                Click="btnUsuarios_Click"
-                Background="#660636"
-                Height="50"
-                BorderBrush="Transparent"
-                Margin="0,0,0,20"
-                HorizontalContentAlignment="Left">
 
+            <Button x:Name="btnUsuarios"
+                    Click="btnUsuarios_Click"
+                    Background="#660636"
+                    Height="50"
+                    BorderBrush="Transparent"
+                    Margin="0,0,0,20"
+                    HorizontalContentAlignment="Left">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="fondo" Background="{TemplateBinding Background}">
-                                        <ContentPresenter
-                                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
-
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
                                         </Trigger>
-
                                         <Trigger Property="IsPressed" Value="True">
                                             <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
                                         </Trigger>
-
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
                 </Button.Style>
-
                 <StackPanel Orientation="Horizontal">
-                    <Image
-                        Height="30" Width="30"
-                        Source="/Desing/Iconos/usuariosMenu.png"
-                        Margin="16,0,10,0"/>
-                    <Label
-                        Content="Usuarios"
-                        Foreground="White"
-                        FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
+                    <Image Height="30" Width="30" Source="/Desing/Iconos/usuariosMenu.png" Margin="16,0,10,0"/>
+                    <Label Content="Usuarios" Foreground="White" FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
                 </StackPanel>
-
             </Button>
 
-            <Button
-                x:Name="btnUsuariosMoviles"
-                Click="btnUsuariosMoviles_Click"
-                Background="#660636"
-                Height="50"
-                BorderBrush="Transparent"
-                HorizontalContentAlignment="Left">
-
+            <Button x:Name="btnUsuariosMoviles"
+                    Click="btnUsuariosMoviles_Click"
+                    Background="#660636"
+                    Height="50"
+                    BorderBrush="Transparent"
+                    Margin="0,0,0,20"
+                    HorizontalContentAlignment="Left">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="fondo" Background="{TemplateBinding Background}">
-                                        <ContentPresenter
-                                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
-
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
                                         </Trigger>
-
                                         <Trigger Property="IsPressed" Value="True">
                                             <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
                                         </Trigger>
-
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
                 </Button.Style>
-
                 <StackPanel Orientation="Horizontal">
-                    <Image
-                        Height="30" Width="30"
-                        Source="/Desing/Iconos/usuarioMovil.png"
-                        Margin="16,0,10,0"/>
-                    <Label
-                        Content="Usuarios Moviles"
-                        Foreground="White"
-                        FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
+                    <Image Height="30" Width="30" Source="/Desing/Iconos/usuarioMovil.png" Margin="16,0,10,0"/>
+                    <Label Content="Usuarios Moviles" Foreground="White" FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
                 </StackPanel>
+            </Button>
 
-
+            <Button x:Name="btnPeticiones"
+                    Click="btnPeticiones_Click"
+                    Background="#660636"
+                    Height="50"
+                    BorderBrush="Transparent"
+                    Margin="0,0,0,20"
+                    HorizontalContentAlignment="Left">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="fondo" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="fondo" Property="Background" Value="#590a2a"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="30" Width="30" 
+                           Source="/Desing/Iconos/peticiones.png" 
+                           Margin="16,0,10,0" RenderTransformOrigin="1,1"/>
+                    <Label Content="Peticiones" Foreground="White" FontSize="20" FontFamily="/Desing/Fonts/#Zx Gamut Medium"/>
+                </StackPanel>
             </Button>
 
         </StackPanel>
 
         <Grid Grid.Column="1">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="2"/>
@@ -176,18 +171,13 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0" Background="White">
-
                 <Button x:Name="btnMenu" DockPanel.Dock="Right"
                         Click="btnMenu_Click"
                         Height="30" Width="30"
                         Background="Transparent" BorderBrush="Transparent"
                         Margin="0,0,30,0"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image
-                        Height="40" Width="40"
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Source="/Desing/Iconos/menuOpciones.png"/>
-
+                    <Image Height="40" Width="40" Source="/Desing/Iconos/menuOpciones.png"/>
                 </Button>
 
                 <Button x:Name="btnPerfil" DockPanel.Dock="Right"
@@ -197,61 +187,36 @@
                         BorderBrush="Transparent"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         Margin="0,0,20,0">
-
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="fondo" Background="{TemplateBinding Background}">
-                                            <ContentPresenter
-                                                HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
-
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="fondo" Property="Background" Value="Transparent"/>
                                                 <Setter Property="Cursor" Value="Hand"/>
                                             </Trigger>
-
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </Style>
                     </Button.Style>
-
                     <StackPanel Orientation="Horizontal">
-
-                        <Image
-                            Height="60" Width="60"
-                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Source="/Desing/Iconos/usuarioPerfil.png"
-                            Stretch="UniformToFill"/>
-
-                        <Label x:Name="lblNombre"
-                               Background="Transparent"
-                               Width="360"
-                               Content="{Binding Nombre}"
-                               FontSize="20"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Margin="0,0,20,0"/>
+                        <Image Height="60" Width="60" Source="/Desing/Iconos/usuarioPerfil.png" Stretch="UniformToFill"/>
+                        <Label x:Name="lblNombre" Background="Transparent" Width="360" Content="{Binding Nombre}" FontSize="20" VerticalAlignment="Center" Margin="0,0,20,0"/>
                     </StackPanel>
                 </Button>
-
-                <Rectangle
-                    Height="1" Width="1"/>
-
+                <Rectangle Height="1" Width="1"/>
             </DockPanel>
 
-            <StackPanel Grid.Row="1"
-                        Background="Black"/>
+            <StackPanel Grid.Row="1" Background="Black"/>
 
-            <Frame x:Name="MainFrame" Grid.Row="2"
-                   NavigationUIVisibility="Hidden"/>
-
+            <Frame x:Name="MainFrame" Grid.Row="2" NavigationUIVisibility="Hidden"/>
         </Grid>
-
     </Grid>
-
 </Window>

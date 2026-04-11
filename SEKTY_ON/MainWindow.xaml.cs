@@ -113,5 +113,12 @@ namespace SEKTY_ON
             ventanaPerfil.Show();
             this.Close();
         }
+
+        private void btnPeticiones_Click(object sender, RoutedEventArgs e)
+        {
+          
+            MainFrame.Navigate(new PeticionesPage());
+        }
     }
+    
 }
