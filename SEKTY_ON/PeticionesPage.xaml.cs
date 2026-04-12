@@ -60,6 +60,15 @@ namespace SEKTY_ON
                             txtMensajeOcupado.Visibility = Visibility.Visible;
                             return;
                         }
+
+                        var lab = JsonConvert.DeserializeObject<Laboratorio>(content);
+                        lab.EstadoId = 2;
+                        lab.Abierto = true;
+                        lab.Peticiones = null;
+
+                        var jsonLab = JsonConvert.SerializeObject(lab);
+                        var contentLab = new StringContent(jsonLab, Encoding.UTF8, "application/json");
+                        await client.PutAsync($"{urlApi}/Laboratorios/{lab.Id}", contentLab);
                     }
 
                     p.Estatus = true;
@@ -73,6 +82,28 @@ namespace SEKTY_ON
         {
             var p = (Peticion)((Button)sender).DataContext;
             txtMensajeOcupado.Visibility = Visibility.Collapsed;
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var resLab = await client.GetAsync($"{urlApi}/Laboratorios/{p.LaboratorioId}");
+                    if (resLab.IsSuccessStatusCode)
+                    {
+                        string content = await resLab.Content.ReadAsStringAsync();
+                        var lab = JsonConvert.DeserializeObject<Laboratorio>(content);
+                        lab.EstadoId = 1;
+                        lab.Abierto = false;
+                        lab.Peticiones = null;
+
+                        var jsonLab = JsonConvert.SerializeObject(lab);
+                        var contentLab = new StringContent(jsonLab, Encoding.UTF8, "application/json");
+                        await client.PutAsync($"{urlApi}/Laboratorios/{lab.Id}", contentLab);
+                    }
+                }
+                catch { }
+            }
+
             p.Estatus = false;
             await Actualizar(p);
         }

@@ -21,5 +21,7 @@ namespace SEKTY_ON.Models
         public int Numero { get; set; }
 
         public virtual Estado Estado { get; set; }
+
+        public virtual ICollection<Peticion> Peticiones { get; set; }
     }
 }
